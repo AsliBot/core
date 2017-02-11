@@ -12,7 +12,11 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get('/', function(req, res){
-    res.send(req.params);
+    // will show urlencoded variables only
+    // example: http://localhost:3000?user=xyz will produce
+    // {user: xyz}
+    // while others can be accessed using req.body
+    res.send(req.query);
 });
 
 const server = app.listen(PORT, function() {
