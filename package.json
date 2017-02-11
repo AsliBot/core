@@ -1,0 +1,15 @@
+{
+  "name": "AsliBot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "url": "https://github.com/AsliBot/core.git",
+    "type": "git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "apiai": "^4.0.0",
+    "body-parser": "^1.16.1",
+    "express": "^4.14.1"
+  }
+}
