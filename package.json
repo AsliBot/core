@@ -1,7 +1,7 @@
 {
   "name": "AsliBot",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "repository": {
     "url": "https://github.com/AsliBot/core.git",
     "type": "git"

@@ -1,0 +1,10 @@
+const keys = {
+  apiai: {
+    client: "",
+    developer: ""
+  }
+};
+
+module.exports = {
+  keys: keys
+};
