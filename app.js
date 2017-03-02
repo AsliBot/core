@@ -2,12 +2,15 @@
 
 const express = require('express');
 const apiai = require("apiai");
+const http = require('http');
 const {async, await} = require('asyncawait');
 const bodyParser = require('body-parser');
-const {keys} = require('./config');
 const actions = require('./actions');
-
+var models = require('./models');
 const app = express();
+const server = http.createServer(app);
+const env = process.env.NODE_ENV || "DEV";
+const {keys} = require('./config')[env];
 const PORT = process.env.PORT || 3000;
 const AI = apiai(keys.apiai.client);
 
@@ -38,6 +41,9 @@ app.get('/', (req, res) => {
     request.end();
 });
 
-const server = app.listen(PORT, () => {
-  console.log(`Listening @ http://localhost:${PORT}`);
+// models.sequelize.sync({force: true}).then(() => {
+models.sequelize.sync().then(() => {
+  server.listen(PORT, () => {
+    console.log(`AsliBot server listening on port ${PORT} in ${env} mode`);
+  })
 });
