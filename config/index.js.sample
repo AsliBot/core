@@ -1,0 +1,32 @@
+const config = {
+  DEV: {
+    keys: {
+      apiai: {
+        client: "",
+        developer: ""
+      },
+      actions: {
+        weather: ""
+      }
+    },
+    DB: {
+      name: 'aslibot',
+      username: '',
+      password: '',
+      options: {
+        host: 'localhost',
+        dialect: 'mysql',
+        pool: {
+          max: 5,
+          min: 0,
+          idle: 10000
+        }
+      }
+    }
+  },
+  PROD: {
+
+  }
+};
+
+module.exports = config;
