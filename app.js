@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
         console.log(JSON.stringify(response, undefined, 2));
 
         const fulfillment = response.result.fulfillment.speech;
-        if(fulfillment) return res.send(fulfillment);
+        if(fulfillment) return res.json({ error: false, data: fulfillment });
 
         const action = response.result.metadata.intentName;
         const params = response.result.parameters;
