@@ -1,13 +1,13 @@
 "use strict";
 
-const express = require('express');
+const app = require('express')();
 const apiai = require("apiai");
 const http = require('http');
 const {async, await} = require('asyncawait');
 const bodyParser = require('body-parser');
 const actions = require('./actions');
 var models = require('./models');
-const app = express();
+const helper = require('./utils/helper');
 const server = http.createServer(app);
 const env = process.env.NODE_ENV || "DEV";
 const {keys} = require('./config')[env];
@@ -17,7 +17,14 @@ const AI = apiai(keys.apiai.client);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/', helper.userInfoMiddleware);
+
 app.get('/', (req, res) => {
+
+    if (!req.user) {
+      return res.json({ error: false, data: "Please Login!" });
+    }
+
     const request = AI.textRequest(req.query.q, { sessionId: req.query.s });
 
     request.on('response', async(response => {

@@ -2,13 +2,9 @@
 
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define("User", {
-    username: DataTypes.STRING
-  }, {
-    classMethods: {
-      associate: function(models) {
-        User.hasMany(models.Task)
-      }
-    }
+    username: DataTypes.STRING,
+    password: DataTypes.STRING,
+    slack: DataTypes.STRING
   });
 
   return User;
