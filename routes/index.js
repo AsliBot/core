@@ -10,27 +10,27 @@ const {keys} = require('../config')[env];
 const AI = apiai(keys.apiai.client);
 
 router.get('/', (req, res) => {
-    const request = AI.textRequest(req.query.q, { sessionId: req.query.user });
+  const request = AI.textRequest(req.query.q, { sessionId: req.query.user });
 
-    request.on('response', async(response => {
-        console.log(JSON.stringify(response, undefined, 2));
+  request.on('response', async(response => {
+    console.log(JSON.stringify(response, undefined, 2));
 
-        const fulfillment = response.result.fulfillment.speech;
-        if(fulfillment) return res.json({ error: false, data: fulfillment });
+    const fulfillment = response.result.fulfillment.speech;
+    if(fulfillment) return res.json({ error: false, data: fulfillment });
 
-        const action = response.result.metadata.intentName;
-        const params = response.result.parameters;
+    const action = response.result.metadata.intentName;
+    const params = response.result.parameters;
 
-        const data = await(actions[action](params));
-        res.json(data);
-    }));
+    const data = await(actions[action](params));
+    res.json(data);
+  }));
 
-    request.on('error', error => {
-        console.log(error);
-        res.status(500).send('ERROR!');
-    });
+  request.on('error', error => {
+    console.log(error);
+    res.status(500).send('ERROR!');
+  });
 
-    request.end();
+  request.end();
 });
 
 module.exports = router;

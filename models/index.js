@@ -1,12 +1,12 @@
 "use strict";
 const path = require("path");
-var fs = require("fs");
-var Sequelize = require("sequelize");
-var env = process.env.NODE_ENV || "DEV";
-var {DB} = require("../config")[env];
-var db = {};
+const fs = require("fs");
+const Sequelize = require("sequelize");
+const env = process.env.NODE_ENV || "DEV";
+const {DB} = require("../config")[env];
+const db = {};
 
-var sequelize = new Sequelize(DB.name, DB.username, DB.password, DB.options);
+const sequelize = new Sequelize(DB.name, DB.username, DB.password, DB.options);
 
 fs
   .readdirSync(__dirname)
@@ -14,7 +14,7 @@ fs
     return (file.indexOf(".") !== 0) && (file !== "index.js");
   })
   .forEach(function(file) {
-    var model = sequelize.import(path.join(__dirname, file));
+    const model = sequelize.import(path.join(__dirname, file));
     db[model.name] = model;
   });
 

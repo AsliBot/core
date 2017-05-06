@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const models = require('./models');
 const routes = require('./routes');
 const helper = require('./utils/helper');
+const cron = require('./utils/cron');
 const server = http.createServer(app);
 const env = process.env.NODE_ENV || "DEV";
 const PORT = process.env.PORT || 3000;

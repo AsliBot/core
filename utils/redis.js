@@ -5,7 +5,7 @@ const Promise = require("bluebird");
 
 const client = Promise.promisifyAll(redis.createClient());
 
-client.on("error", function (err) {
+client.on("error", (err) => {
     console.log("Redis Error " + err);
 });
 
@@ -16,7 +16,7 @@ module.exports = {
   get: key => {
     return client.getAsync(key)
       .then(res => {
-        return res.toString();
+        return (res) ? res.toString() : res;
       });
   }
 };
