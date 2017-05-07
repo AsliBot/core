@@ -22,7 +22,7 @@ const fetch = city => {
     });
 };
 
-const init = async(params => {
+const init = async((user, params) => {
   let DATA = await( fetch(params['geo-city']) );
   return DATA;
 });

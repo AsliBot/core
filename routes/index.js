@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
     const action = response.result.metadata.intentName;
     const params = response.result.parameters;
 
-    const data = await(actions[action](params));
+    const data = await(actions[action](req.user, params));
     res.json(data);
   }));
 

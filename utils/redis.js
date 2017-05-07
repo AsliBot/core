@@ -11,7 +11,9 @@ client.on("error", (err) => {
 
 module.exports = {
   set: (key, value) => {
-    client.set(key, value);
+    client.set(key, value, err => {
+      console.log(err);
+    });
   },
   get: key => {
     return client.getAsync(key)

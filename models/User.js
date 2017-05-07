@@ -1,11 +1,21 @@
-"use strict";
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-module.exports = function(sequelize, DataTypes) {
-  var User = sequelize.define("User", {
-    username: DataTypes.STRING,
-    password: DataTypes.STRING,
-    slack: DataTypes.STRING
-  });
+const UserSchema = new Schema({
+  username: {
+    type: String,
+    trim: true,
+    unique : true
+  },
+  password: {
+    type: String,
+    trim: true
+  },
+  slack: {
+    type: String,
+    default: ""
+  }
+});
 
-  return User;
-};
+const User = mongoose.model('User', UserSchema);
+module.exports = User;

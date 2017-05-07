@@ -14,9 +14,9 @@
     "bluebird": "^3.5.0",
     "body-parser": "^1.16.1",
     "express": "^4.14.1",
+    "mongoose": "^4.9.7",
     "mysql": "^2.13.0",
     "redis": "^2.6.5",
-    "sequelize": "^3.30.2",
     "twilio": "^2.11.1"
   }
 }
