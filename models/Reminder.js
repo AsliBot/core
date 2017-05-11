@@ -12,6 +12,10 @@ const ReminderSchema = new Schema({
   },
   datetime: {
     type: Date,
+  },
+  completed: {
+    type: Boolean,
+    default: false
   }
 });
 

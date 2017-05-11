@@ -3,8 +3,8 @@
 const axios = require('axios');
 const util = require('util');
 const {async, await} = require('asyncawait');
-var env = process.env.NODE_ENV || "DEV";
-const {keys} = require('../config')[env];
+const ENV = process.env.NODE_ENV || "development";
+const {keys} = require('../config')[ENV];
 const token = keys.actions.weather;
 
 const URL = "http://api.openweathermap.org/data/2.5/weather?q=%s&units=metric&appid=" + token;

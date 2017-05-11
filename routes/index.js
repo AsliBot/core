@@ -5,8 +5,8 @@ const router = express.Router();
 const apiai = require("apiai");
 const {async, await} = require('asyncawait');
 const actions = require('../actions');
-const env = process.env.NODE_ENV || "DEV";
-const {keys} = require('../config')[env];
+const ENV = process.env.NODE_ENV || "development";
+const {keys} = require('../config')[ENV];
 const AI = apiai(keys.apiai.client);
 
 router.get('/', (req, res) => {
