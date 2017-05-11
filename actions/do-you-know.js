@@ -16,8 +16,7 @@ const findRecord = (username, key) => {
 const init = async((user, params) => {
   let DATA = await( findRecord(user.username, params['key']) );
   if (DATA) {
-    console.log(DATA);
-    return { error: false, data: `${params['key']} is ${DATA.value}` };
+    return { error: false, data: `${DATA.key} is ${DATA.value}` };
   }
   return { error: false, data: `No I don't know ${params['key']}` };
 });

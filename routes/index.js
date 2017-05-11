@@ -21,6 +21,15 @@ router.get('/', (req, res) => {
     const action = response.result.metadata.intentName;
     const params = response.result.parameters;
 
+    // make sure intent and action are same
+    if (action != params.action) {
+      const resp = {
+        error: false,
+        data: "Sorry I am confused, Please try again!"
+      }
+      return res.json(resp);
+    }
+
     const data = await(actions[action](req.user, params));
     res.json(data);
   }));

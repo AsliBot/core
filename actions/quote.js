@@ -15,7 +15,7 @@ function fetch () {
   return new Promise(function (resolve, reject) {
     request(options, (error, res, body) => {
       if (!error && res.statusCode == 200) {
-        resolve(JSON.parse(body));
+        resolve(JSON.parse(body.replace("\'", "'")));
       } else {
         reject(error);
       }
