@@ -8,7 +8,7 @@ const URL = "https://api.chucknorris.io/jokes/random?category=dev";
 const fetch = () => {
   return axios.get( URL )
     .then( response => ({ error: false, data: response.data.value }) )
-    .catch( error => ({ error: true, message: "Internal Server Error" }) );
+    .catch( error => ({ error: true, data: "Oh no, there has been an internal server error" }) );
 };
 
 const init = async((user, params) => {

@@ -13,15 +13,22 @@ const app = express();
 let SERVER;
 
 const initMiddlewares = () => {
+  app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "accept, Content-Type, X-CAuth-Token, authorization, X-CAccess-Id, X-Signature, X-Payload, X-Login-Token");
+    if ('OPTIONS' == req.method) {
+      return res.send(204);
+    }
+    next();
+  });
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   mongoose.Promise = global.Promise;
-  app.use('/', helper.loginCheckMiddleware);
-  app.use('/', helper.userInfoMiddleware);
 };
 
 const initRoutes = () => {
-  app.use('/', routes);
+  app.use('/api', routes);
 };
 
 const startServer = () => {

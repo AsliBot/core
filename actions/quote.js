@@ -28,7 +28,7 @@ const init = async((user, params) => {
   if (DATA) {
     return { error: false, data: `${DATA.quoteText} \n - ${DATA.quoteAuthor}` };
   }
-  return { error: false, data: "Error fetching quote" };
+  return { error: true, data: "Oh no, there has been an internal server error" };
 });
 
 module.exports = init;

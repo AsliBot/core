@@ -20,5 +20,11 @@ module.exports = {
       .then(res => {
         return (res) ? res.toString() : res;
       });
+  },
+  expire: (key, seconds) => {
+    client.expire(key, seconds);
+  },
+  del: key => {
+    client.del(key);
   }
 };

@@ -1,50 +1,53 @@
 "use strict";
 
+const uuid = require("uuid");
 const {async, await} = require('asyncawait');
 const {User} = require('../models');
 const redis = require('./redis');
 
-const loginCheckMiddleware = (req, res, next) => {
-  const text = req.query.q.toLowerCase().split(" ");
-  if(text.length !=3 || text[0] != "login") {
-    return next();
-  }
-  User.findOne({username : text[1], password: text[2]}, (err, user) => {
-    if (err) return next(new Error("Error authenticating user"));
-    if (!user) {
-      return res.json({error: false, data: "Invalid Credentials!"});
-    }
-    user[req.query.platform] = req.query.user;
-    user.save((err) => {
-      if (err) return next(new Error("Error updating user"));
-      const key = `${req.query.platform}_${req.query.user}`;
-      redis.set(key, JSON.stringify(user));
-      res.json({error: false, data: "Successfully Logged In!"});
-    });
-  });
-};
-
-const userInfoMiddleware = async((req, res, next) => {
+const getUser = req => {
   const key = `${req.query.platform}_${req.query.user}`;
   const user = await( redis.get(key) );
   if (user) {
-    req.user = JSON.parse(user);
-    return next();
+    return JSON.parse(user);
   }
   const condition = {};
   condition[req.query.platform] = req.query.user;
-  User.findOne(condition, (err, user) => {
-    if (err) return next(new Error("Error fetching user"));
-    if (!user) {
-      return res.json({error: false, data: "Please Login!"});
-    }
+  return User
+    .findOne(condition, (err, user) => {
+    if (err || !user) return null;
     redis.set(key, JSON.stringify(user));
-    req.user = user;
-    next();
+    return user;
   });
+};
+
+const verifyOTP = async(mobileNumber => {
+  const otpKey = "otp_" + mobileNumber;
+	const otp = await(redis.get(otpKey));
+  redis.del(otpKey);
+	return otp ? true : false;
 });
 
+const isUserPresent = mobileNumber => {
+  return User
+  .findOne({mobile: mobileNumber})
+  .then(user => {
+    return user ? true : false;
+  });
+  return false;
+};
+
+const newSession = user => {
+  const sessionToken = uuid.v1();
+  const key = `web_${sessionToken}`;
+  redis.set(key, JSON.stringify(user));
+  redis.expire(key, 60*60);
+  return sessionToken;
+};
+
 module.exports = {
-  loginCheckMiddleware,
-  userInfoMiddleware
+  getUser,
+  verifyOTP,
+  isUserPresent,
+  newSession
 };

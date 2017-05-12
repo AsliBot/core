@@ -24,7 +24,7 @@ const init = async((user, params) => {
     const sayDate = moment(datetime).format("Do MMMM, h:mm a");
     return { error: false, data: `Sure! I will remind you to ${DATA.task} on ${sayDate}` };
   }
-  return { error: false, data: "Error storing this information" };
+  return { error: true, data: "Oh no, there has been an internal server error" };
 });
 
 module.exports = init;

@@ -20,7 +20,7 @@ const init = async((user, params) => {
   if (DATA) {
     return { error: false, data: `Got it! ${params['key']} is ${params['value']}` };
   }
-  return { error: false, data: "Error storing this information" };
+  return { error: true, data: "Oh no, there has been an internal server error" };
 });
 
 module.exports = init;

@@ -18,7 +18,7 @@ const fetch = city => {
       return { error: false, data: `Its ${temp} °C in ${city} and looks ${condition}` };
     })
     .catch( error => {
-      return { error: true, message: "Internal Server Error" };
+      return { error: true, data: "Oh no, there has been an internal server error" };
     });
 };
 
