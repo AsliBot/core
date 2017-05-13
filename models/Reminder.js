@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ReminderSchema = new Schema({
-  username: {
+  mobile: {
     type: String,
     trim: true
   },

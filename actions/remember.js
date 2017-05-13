@@ -3,8 +3,8 @@
 const {async, await} = require('asyncawait');
 const {Remember} = require('../models');
 
-const createRecord = (username, key, value) => {
-  const query = { key: key, username: username };
+const createRecord = (mobile, key, value) => {
+  const query = { key: key, mobile: mobile };
   const update = { key: key, value: value };
   const options = { upsert: true, new: true, setDefaultsOnInsert: true };
   return Remember
@@ -16,7 +16,7 @@ const createRecord = (username, key, value) => {
 };
 
 const init = async((user, params) => {
-  let DATA = await( createRecord(user.username, params['key'], params['value']) );
+  let DATA = await( createRecord(user.mobile, params['key'], params['value']) );
   if (DATA) {
     return { error: false, data: `Got it! ${params['key']} is ${params['value']}` };
   }

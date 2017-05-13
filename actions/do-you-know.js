@@ -3,8 +3,8 @@
 const {async, await} = require('asyncawait');
 const {Remember} = require('../models');
 
-const findRecord = (username, key) => {
-  const query = { key: key, username: username };
+const findRecord = (mobile, key) => {
+  const query = { key: key, mobile: mobile };
   return Remember
     .findOne(query)
     .exec((error, result) => {
@@ -14,7 +14,7 @@ const findRecord = (username, key) => {
 };
 
 const init = async((user, params) => {
-  let DATA = await( findRecord(user.username, params['key']) );
+  let DATA = await( findRecord(user.mobile, params['key']) );
   if (DATA) {
     return { error: false, data: `${DATA.key} is ${DATA.value}` };
   }

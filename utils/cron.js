@@ -21,10 +21,10 @@ const getReminders = datetime => {
     });
 }
 
-const getUser = username => {
+const getUser = mobile => {
   return User
     .findOne({
-      username: username
+      mobile: mobile
     })
     .exec((err, res) => {
       if (err) return null;
@@ -36,10 +36,10 @@ const reminderCron = async(() => {
   const datetime = moment( moment(new Date()).format("YYYY-MM-DD HH:mm") ).format();
   const reminders = await(getReminders(datetime));
   for (let reminder of reminders) {
-    const user = await(getUser(reminder.username));
+    const user = await(getUser(reminder.mobile));
     if (!user) return;
-    const {username, mobile} = JSON.parse( JSON.stringify(user) );      // weird mongoose hack
-    const message = `\nHello ${username},\nHere's your reminder: ${reminder.task}`;
+    const {name, mobile} = JSON.parse( JSON.stringify(user) );      // weird mongoose hack
+    const message = `\nHello ${name},\nHere's your reminder: ${reminder.task}`;
     sms.send(mobile, message, err  => {
       if (err) return console.log("Error sending SMS");
       console.log(`SMS sent to ${mobile}`);
